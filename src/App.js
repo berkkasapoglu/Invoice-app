@@ -1,25 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
-
+import Sidebar from "./components/Sidebar/Sidebar"
+import { BrowserRouter } from "react-router-dom"
+import Invoices from "./components/Invoices/Invoices"
+import Container from "./components/Container/Container"
+import theme from "./config/theme"
+import { ThemeProvider } from "styled-components"
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <ThemeProvider theme={theme.dark}>
+      <BrowserRouter>
+        <Sidebar />
+        <Container>
+          <Invoices />
+        </Container>
+      </BrowserRouter>
+    </ThemeProvider>
+  )
 }
 
-export default App;
+export default App
