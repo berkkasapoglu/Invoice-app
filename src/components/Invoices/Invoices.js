@@ -7,12 +7,11 @@ import {
 } from "./Invoices.styles"
 import InvoiceList from "./InvoiceList/InvoiceList"
 import Filter from "./Filter/Filter"
-import data from "../../data/invoice"
-import { useState } from "react"
+import { useSelector } from "react-redux/es/exports"
 
 function Invoices() {
-  const [invoiceData, setInvoiceData] = useState(data)
-
+  const invoiceData = useSelector(state => state.invoices)
+  
   return (
     <>
       <StyledHeader>
@@ -23,7 +22,7 @@ function Invoices() {
           </InvoiceLengthInfo>
         </Info>
         <Filter />
-        <InvoiceButton>New Invoice</InvoiceButton>
+        <InvoiceButton type="btnPrimary">New Invoice</InvoiceButton>
       </StyledHeader>
       <InvoiceList invoices={invoiceData} />
     </>

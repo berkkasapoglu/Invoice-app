@@ -5,6 +5,8 @@ const theme = {
     bgSecondary: "hsl(233deg 31% 17%)",
     btnPrimary: "hsl(252deg 94% 67%)",
     btnPrimaryHover: "hsl(252deg 100% 73%)",
+    bgSummary: "hsl(233deg 30% 21%)",
+    bgSummaryTotal: "hsl(231deg 28% 7%)",
     shadow: "hsla(231, 38%, 45%, 90%)",
     textSecondary: "hsl(231, 75%, 93%)",
     white: "#fff",
@@ -20,6 +22,12 @@ const theme = {
     draft: "hsl(231, 75%, 93%)",
     draftDark: "hsla(231, 75%, 93%, 7%)",
   },
+  fontSizes: {
+    small: "0.875em",
+    medium: "1em",
+    large: "1.125em",
+    extraLarge: "1.25em"
+  }
 }
 
 export default theme

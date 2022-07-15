@@ -1,6 +1,7 @@
 import {
   StyledInvoiceList,
   Item,
+  Link,
   Code,
   DueDate,
   ClientName,
@@ -8,20 +9,21 @@ import {
   Status,
   Circle,
 } from "./InvoiceList.styles"
+import Badge from "../../common/Badge/Badge"
+
 function InvoiceList({ invoices }) {
   return (
     <StyledInvoiceList>
       {invoices.map((invoice) => (
-        <Item key={invoice.id}>
-          <Code>{invoice.id}</Code>
-          <DueDate>Due {new Date(invoice.paymentDue).toDateString()}</DueDate>
-          <ClientName>{invoice.clientName}</ClientName>
-          <Price>£ {invoice.total}</Price>
-          <Status currStatus={invoice.status}>
-            <Circle currStatus={invoice.status} />
-            {invoice.status}
-          </Status>
-        </Item>
+        <Link to={`/invoices/${invoice.id}`} key={invoice.id}>
+          <Item>
+            <Code>{invoice.id}</Code>
+            <DueDate>Due {new Date(invoice.paymentDue).toDateString()}</DueDate>
+            <ClientName>{invoice.clientName}</ClientName>
+            <Price>£ {invoice.total}</Price>
+            <Badge status={invoice.status} />
+          </Item>
+        </Link>
       ))}
     </StyledInvoiceList>
   )

@@ -6,28 +6,36 @@ import {
   Option,
   ArrowDown,
 } from "./Filter.styles"
+import useClickOutside from "../../../hooks/useClickOutside"
+import { useDispatch } from "react-redux"
+import { filterByStatus } from "../../../store/actions/invoicesActions"
 
 function Filter() {
   const [isFilterOpen, setIsFilterOpen] = useState(false)
   const [selectedFilters, setSelectedFilters] = useState({
     paid: false,
-    pending: true,
+    pending: false,
     draft: false,
   })
+
+  const filterRef = useClickOutside(() => setIsFilterOpen(false))
+  const dispatch = useDispatch()
+
   const toggleFilterList = () => {
     setIsFilterOpen(!isFilterOpen)
   }
 
   const handleOptionSelect = (e) => {
-    console.log(e.target.value)
-    setSelectedFilters({
+    const currentFilters = {
       ...selectedFilters,
       [e.target.value]: !selectedFilters[e.target.value],
-    })
+    }
+    dispatch(filterByStatus(currentFilters))
+    setSelectedFilters(currentFilters)
   }
 
   return (
-    <StyledFilter>
+    <StyledFilter ref={filterRef}>
       <Button onClick={toggleFilterList}>
         Filter By Status
         <ArrowDown />
