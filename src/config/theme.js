@@ -3,14 +3,24 @@ const theme = {
   dark: {
     bgBase: "hsl(231, 30%, 11%)",
     bgSecondary: "hsl(233deg 31% 17%)",
-    btnPrimary: "hsl(252deg 94% 67%)",
-    btnPrimaryHover: "hsl(252deg 100% 73%)",
     bgSummary: "hsl(233deg 30% 21%)",
     bgSummaryTotal: "hsl(231deg 28% 7%)",
+    bgOverlay: "hsl(0deg 0% 0% / 50%)",
+    bgInputBorder: "hsl(233deg 30% 21%)",
+    bgFormScroll: "hsl(233deg 31% 22%)",
+    btnPrimary: "hsl(252deg 94% 67%)",
+    btnPrimaryHover: "hsl(252deg 100% 73%)",
+    btnGray: "hsl(233deg 30% 21%)",
+    btnGrayHover: "hsl(233deg 30% 26%)",
+    btnDanger: "hsl(0, 100%, 40%)",
+    btnDangerHover: "hsl(0, 100%, 50%)",
+    btnInfo: "hsl(191, 64%, 59%)",
+    btnInfoHover: "hsl(191, 64%, 70%)",
     shadow: "hsla(231, 38%, 45%, 90%)",
     textSecondary: "hsl(231, 75%, 93%)",
     white: "#fff",
     black: "#000",
+    error: "rgb(236 87 87)",
     grayLight: "hsl(231, 20%, 62%)",
     grayMedium: "hsl(225, 14%, 53%)",
     purple: "hsl(252, 94%, 67%)",
@@ -25,8 +35,8 @@ const theme = {
   fontSizes: {
     small: "0.875em",
     medium: "1em",
-    large: "1.125em",
-    extraLarge: "1.25em"
+    large: "1.2em",
+    extraLarge: "1.3em",
   }
 }
 

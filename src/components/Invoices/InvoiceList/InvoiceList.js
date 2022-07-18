@@ -6,12 +6,13 @@ import {
   DueDate,
   ClientName,
   Price,
-  Status,
-  Circle,
 } from "./InvoiceList.styles"
 import Badge from "../../common/Badge/Badge"
+import useInvoices from "../../../hooks/useInvoices"
 
-function InvoiceList({ invoices }) {
+function InvoiceList() {
+  const { invoices } = useInvoices()
+
   return (
     <StyledInvoiceList>
       {invoices.map((invoice) => (

@@ -1,7 +1,11 @@
-import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux/es/exports"
 import { useParams } from "react-router-dom"
-import { getInvoice } from "../../store/actions/invoicesActions"
+import { useNavigate } from "react-router-dom"
+import {
+  editInvoice,
+  removeInvoice,
+  changeStatus,
+} from "../../store/actions/invoicesActions"
 import {
   StyledInvoiceView,
   Description,
@@ -18,13 +22,8 @@ import {
   Header,
   Body,
   ButtonWrapper,
-  Summary,
-  SummaryHead,
-  SummaryBody,
-  SummaryItem,
-  SummaryTotal,
-  Total
 } from "./InvoiceView.styles"
+import Summary from "./Summary/Summary"
 import Button from "../common/Button/Button"
 import Badge from "../common/Badge/Badge"
 import { AiOutlineLeft } from "react-icons/ai"
@@ -32,11 +31,24 @@ import { AiOutlineLeft } from "react-icons/ai"
 function InvoiceView() {
   const { id } = useParams()
   const dispatch = useDispatch()
-  const invoice = useSelector((state) => state.invoice)
-  useEffect(() => {
-    dispatch(getInvoice(id))
-  }, [dispatch, id])
-  console.log(invoice)
+  const navigate = useNavigate()
+  const invoice = useSelector((state) =>
+    state.invoices.invoiceItems.find((invoice) => invoice.id === id)
+  )
+
+  const handleRemoveInvoice = () => {
+    dispatch(removeInvoice(id))
+    navigate("/")
+  }
+
+  const handleEditInvoice = () => {
+    dispatch(editInvoice(id))
+  }
+
+  const handleChangeStatus = (status) => {
+    dispatch(changeStatus(id, status))
+  }
+
   return (
     invoice && (
       <StyledInvoiceView>
@@ -48,9 +60,31 @@ function InvoiceView() {
           <Text>Status</Text>
           <Badge status={invoice.status} />
           <ButtonWrapper>
-            <Button type="btnPrimary">Edit</Button>
-            <Button type="btnPrimary">Delete</Button>
-            <Button type="btnPrimary">Mark as Paid</Button>
+            {invoice.status === "paid" ? (
+              <Button type="btnDanger" onClick={() => handleRemoveInvoice(id)}>
+                Delete
+              </Button>
+            ) : (
+              <>
+                <Button type="btnInfo" onClick={() => handleEditInvoice(id)}>
+                  Edit
+                </Button>
+                <Button
+                  type="btnDanger"
+                  onClick={() => handleRemoveInvoice(id)}
+                >
+                  Delete
+                </Button>
+                {invoice.status !== "draft" && (
+                  <Button
+                    type="btnPrimary"
+                    onClick={() => handleChangeStatus("paid")}
+                  >
+                    Mark as Paid
+                  </Button>
+                )}
+              </>
+            )}
           </ButtonWrapper>
         </Header>
         <Body>
@@ -67,15 +101,15 @@ function InvoiceView() {
             </SenderAddress>
             <InvoiceDate>
               <Text>Invoice Date</Text>
-              <Title>{invoice.createdAt}</Title>
+              <Title>{new Date(invoice.createdAt).toDateString()}</Title>
             </InvoiceDate>
             <BillInfo>
               <Text>Bill to</Text>
               <Title>{invoice.clientName}</Title>
-              <span>{invoice.clientAddress.street}</span>
-              <span>{invoice.clientAddress.city}</span>
-              <span>{invoice.clientAddress.postCode}</span>
-              <span>{invoice.clientAddress.country}</span>
+              <Text>{invoice.clientAddress.street}</Text>
+              <Text>{invoice.clientAddress.city}</Text>
+              <Text>{invoice.clientAddress.postCode}</Text>
+              <Text>{invoice.clientAddress.country}</Text>
             </BillInfo>
             <Email>
               <Text>Sent to</Text>
@@ -83,31 +117,10 @@ function InvoiceView() {
             </Email>
             <PaymentDue>
               <Text>Payment Due</Text>
-              <Title>{invoice.createdAt}</Title>
+              <Title>{new Date(invoice.paymentDue).toDateString()}</Title>
             </PaymentDue>
           </Description>
-          <Summary>
-            <SummaryHead>
-              <Text>Item Name</Text>
-              <Text>QTY.</Text>
-              <Text>Price</Text>
-              <Text>Total</Text>
-            </SummaryHead>
-            <SummaryBody>
-              {invoice.items.map((item) => (
-                <>
-                  <SummaryItem>{item.name}</SummaryItem>
-                  <SummaryItem>{item.quantity}</SummaryItem>
-                  <SummaryItem>£{item.price}</SummaryItem>
-                  <SummaryItem>£{item.total}</SummaryItem>
-                </>
-              ))}
-            </SummaryBody>
-            <SummaryTotal>
-              <Text>Amount Due</Text>
-              <Total>£ {invoice.total}</Total>
-            </SummaryTotal>
-          </Summary>
+          <Summary invoice={invoice} />
         </Body>
       </StyledInvoiceView>
     )

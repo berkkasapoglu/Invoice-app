@@ -91,36 +91,3 @@ export const Email = styled.div`
   grid-row: 2;
   grid-column: 3 / span 1;
 `
-export const Summary = styled.div`
-  background-color: ${({ theme }) => theme.colors.bgSummary};
-  border-radius: inherit;
-`
-
-export const SummaryTable = styled.div`
-  display: grid;
-  padding: 1rem 2rem;
-  grid-template-columns: 2fr 1fr 1fr auto;
-`
-
-export const SummaryHead = styled(SummaryTable)``
-
-export const SummaryBody = styled(SummaryTable)`
-  gap: 1rem 0;
-`
-export const SummaryItem = styled.p`
-  font-size: ${({theme}) => theme.font.small};
-  color: ${({theme}) => theme.colors.white};
-  font-weight: bold;
-`
-
-export const SummaryTotal = styled.div`
-  display: flex;
-  justify-content: space-between;
-  background-color: ${({ theme }) => theme.colors.bgSummaryTotal};
-  border-bottom-right-radius: inherit;
-  border-bottom-left-radius: inherit;
-  align-items: center;
-  padding: 1rem 2rem;
-`
-
-export const Total = styled.h1``
