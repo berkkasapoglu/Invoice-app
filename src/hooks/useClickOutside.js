@@ -8,10 +8,10 @@ function useClickOutside(cb) {
         cb()
       }
     }
-    document.addEventListener("mousedown", closeMenu)
+    document.addEventListener("click", closeMenu, true)
     
     return () => {
-      document.removeEventListener("mousedown", closeMenu)
+      document.removeEventListener("click", closeMenu, true)
     }
   })
   return domRef

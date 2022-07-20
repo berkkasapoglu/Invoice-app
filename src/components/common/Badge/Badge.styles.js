@@ -9,7 +9,7 @@ export const StyledStatus = styled.div`
     `}
   border-radius: 0.5rem;
   font-size: ${({ theme }) => theme.font.small};
-  font-weight: 600;
+  font-weight: bold;
   width: 100px;
   text-transform: capitalize;
   padding: 0.7rem 0.5rem;

@@ -65,3 +65,12 @@ export const saveChanges = (id, invoice) => {
     },
   }
 }
+
+export const toggleModal = (id) => {
+  return {
+    type: ACTION_TYPES.TOGGLE_MODAL,
+    payload: {
+      id: id
+    },
+  }
+}

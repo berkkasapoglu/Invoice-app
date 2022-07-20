@@ -7,6 +7,7 @@ export const StyledFilter = styled.div`
   font-weight: bold;
   font-size: ${({ theme }) => theme.font.small};
   margin-right: 2rem;
+  z-index: 5;
 `
 export const Button = styled.button`
   display: flex;

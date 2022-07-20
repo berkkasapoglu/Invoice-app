@@ -6,23 +6,31 @@ import {
   DueDate,
   ClientName,
   Price,
+  Status
 } from "./InvoiceList.styles"
-import Badge from "../../common/Badge/Badge"
 import useInvoices from "../../../hooks/useInvoices"
+import { invoicesVariants } from "../../../utilities/variants"
 
 function InvoiceList() {
   const { invoices } = useInvoices()
 
   return (
     <StyledInvoiceList>
-      {invoices.map((invoice) => (
+      {invoices.map((invoice, idx) => (
         <Link to={`/invoices/${invoice.id}`} key={invoice.id}>
-          <Item>
+          <Item
+            custom={idx}
+            layout
+            initial="hidden"
+            animate="visible"
+            variants={invoicesVariants.item}
+            exit="exit"
+          >
             <Code>{invoice.id}</Code>
             <DueDate>Due {new Date(invoice.paymentDue).toDateString()}</DueDate>
             <ClientName>{invoice.clientName}</ClientName>
             <Price>£ {invoice.total}</Price>
-            <Badge status={invoice.status} />
+            <Status status={invoice.status} />
           </Item>
         </Link>
       ))}

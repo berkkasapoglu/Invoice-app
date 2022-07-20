@@ -1,5 +1,6 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { Link as RouterLink } from "../Invoices/InvoiceList/InvoiceList.styles"
+import { motion } from "framer-motion"
 
 export const StyledInvoiceView = styled.div``
 
@@ -11,11 +12,13 @@ export const Link = styled(RouterLink)`
   font-size: ${({ theme }) => theme.font.small};
   margin-bottom: 2rem;
   font-weight: bold;
-  transition: 0.3s ease-in-out;
+  transition: color 0.3s ease-in-out;
   &:hover {
     color: ${({ theme }) => theme.colors.purple};
   }
 `
+
+export const MotionLink = motion(Link)
 
 export const Text = styled.p`
   font-size: ${({ theme }) => theme.font.small};
@@ -32,12 +35,15 @@ export const Code = styled.h3`
 
 export const Title = styled.h3``
 
-export const Ground = styled.div`
+export const Ground = css`
   background-color: ${({ theme }) => theme.colors.bgSecondary};
   padding: 1.5rem 1rem;
   border-radius: 0.5rem;
+  box-shadow: 0 10px 10px -10px ${({theme}) => theme.colors.shadow};
+  transition: background-color .4s ease-in-out;
 `
-export const Header = styled(Ground)`
+export const Header = styled(motion.div)`
+  ${Ground}
   display: flex;
   gap: 15px;
   justify-content: space-between;
@@ -50,7 +56,8 @@ export const ButtonWrapper = styled.div`
   gap: 15px;
   margin-left: auto;
 `
-export const Body = styled(Ground)`
+export const Body = styled(motion.div)`
+  ${Ground}
   padding: 3rem 3rem;
 `
 

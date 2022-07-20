@@ -33,12 +33,12 @@ export const invoicesReducer = (
       return {
         ...state,
         invoiceItems: newInvoices,
+        isModalOpen: false,
       }
     case ACTION_TYPES.EDIT:
       return {
         ...state,
         isFormOpen: true,
-        isModalOpen: true,
         isEditModeOpen: true,
         invoiceId: payload.id,
       }
@@ -53,7 +53,7 @@ export const invoicesReducer = (
       })
       return {
         ...state,
-        invoiceItems: newInvoiceItems
+        invoiceItems: newInvoiceItems,
       }
     }
     case ACTION_TYPES.CHANGE_STATUS: {
@@ -74,14 +74,18 @@ export const invoicesReducer = (
       return {
         ...state,
         isFormOpen: true,
-        isModalOpen: true,
       }
     case ACTION_TYPES.CLOSE_FORM:
       return {
         ...state,
         isFormOpen: false,
-        isModalOpen: false,
         isEditModeOpen: false,
+      }
+    case ACTION_TYPES.TOGGLE_MODAL:
+      return {
+        ...state,
+        isModalOpen: !state.isModalOpen,
+        invoiceId: payload.id ? payload.id : "",
       }
     default:
       return state

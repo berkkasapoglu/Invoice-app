@@ -18,26 +18,39 @@ const initialItemState = {
   total: 0,
 }
 
-function ItemList({ formData, setFormData, errors, setErrors }) {
+function ItemList({ formData, setFormData, errors, setErrors, isValidated }) {
   const { items } = formData
+
   const handleClickNewItem = (e) => {
     e.preventDefault()
     const itemsCopy = items.map((item) => ({ ...item }))
     itemsCopy.push(initialItemState)
-    setFormData({
+    const newFormData = {
       ...formData,
       items: itemsCopy,
-    })
+    }
+    setFormData(newFormData)
   }
 
   const handleItemRemove = (idx) => {
     const itemsCopy = items.map((item) => ({ ...item }))
+
     const deletedItem = itemsCopy.splice(idx, 1)[0]
-    setFormData({
+    const newFormData = {
       ...formData,
       items: itemsCopy,
       total: formData.total - deletedItem.total,
-    })
+    }
+
+    if (errors && Array.isArray(errors.items)) {
+      const itemErrors = errors.items.map((item) => ({ ...item }))
+      itemErrors.splice(idx, 1)
+      setErrors({
+        ...errors,
+        items: itemErrors,
+      })
+    }
+    setFormData(newFormData)
   }
 
   const onChange = (e, idx) => {
@@ -56,15 +69,40 @@ function ItemList({ formData, setFormData, errors, setErrors }) {
     setErrors(errors)
     setFormData(newFormData)
   }
+
+  const getLabelErrors = (key) => {
+    let isError = false
+    if (Array.isArray(errors)) {
+      errors.forEach((item) => {
+        if (item[key]) isError = true
+      })
+    }
+    return isError
+  }
   return (
     <StyledItemList>
       <Title>Item List</Title>
       {items.length ? (
         <>
           <Head>
-            <Label>Item Name</Label>
-            <Label>Qty.</Label>
-            <Label>Price</Label>
+            <Label
+              error={errors && getLabelErrors("name")}
+              isValidated={isValidated}
+            >
+              Item Name
+            </Label>
+            <Label
+              error={errors && getLabelErrors("quantity")}
+              isValidated={isValidated}
+            >
+              Qty.
+            </Label>
+            <Label
+              error={errors && getLabelErrors("price")}
+              isValidated={isValidated}
+            >
+              Price
+            </Label>
             <Label>Total</Label>
           </Head>
           <List>
@@ -74,7 +112,8 @@ function ItemList({ formData, setFormData, errors, setErrors }) {
                   onChange={(e) => onChange(e, idx)}
                   value={item.name}
                   name="name"
-                  error={errors && errors[idx]?.name}
+                  error={errors && errors.items && errors.items[idx]?.name}
+                  isValidated={isValidated}
                 />
                 <Input
                   onChange={(e) => onChange(e, idx)}
@@ -82,7 +121,8 @@ function ItemList({ formData, setFormData, errors, setErrors }) {
                   min={0}
                   value={item.quantity}
                   name="quantity"
-                  error={errors && errors[idx]?.quantity}
+                  error={errors && errors.items && errors.items[idx]?.quantity}
+                  isValidated={isValidated}
                 />
                 <Input
                   onChange={(e) => onChange(e, idx)}
@@ -90,7 +130,8 @@ function ItemList({ formData, setFormData, errors, setErrors }) {
                   min={0}
                   value={item.price}
                   name="price"
-                  error={errors && errors[idx]?.price}
+                  error={errors && errors.items && errors.items[idx]?.price}
+                  isValidated={isValidated}
                 />
                 <Number onChange={(e) => onChange(e, idx)} name="total">
                   {item.quantity * item.price}

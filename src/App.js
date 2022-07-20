@@ -1,27 +1,23 @@
-import Sidebar from "./components/Sidebar/Sidebar"
-import Invoices from "./components/Invoices/Invoices"
-import Container from "./components/Container/Container"
-import InvoiceView from "./components/InvoiceView/InvoiceView"
-import Form from "./components/Form/Form"
-import ModalOverlay from "./components/common/ModalOverlay/ModalOverlay"
 import theme from "./config/theme"
 import { ThemeProvider } from "styled-components"
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-function App() {
+import { BrowserRouter } from "react-router-dom"
+import { useSelector } from "react-redux/es/exports"
+import Wrapper from "./components/Wrapper/Wrapper"
+import AnimatedRoutes from "./AnimatedRoutes"
+import GlobalStyle from "./config/GlobalStyle"
 
+function App() {
+  const selectedTheme = useSelector((state) => state.theme)
   return (
-    <ThemeProvider theme={{ colors: theme.dark, font: theme.fontSizes }}>
-      <BrowserRouter>
-        <Sidebar />
-        <ModalOverlay />
-        <Form />
-        <Container>
-          <Routes>
-            <Route path="/" element={<Invoices />} />
-            <Route path="/invoices/:id" element={<InvoiceView />} />
-          </Routes>
-        </Container>
-      </BrowserRouter>
+    <ThemeProvider
+      theme={{ colors: theme[selectedTheme], font: theme.fontSizes }}
+    >
+      <Wrapper>
+        <GlobalStyle />
+        <BrowserRouter>
+          <AnimatedRoutes />
+        </BrowserRouter>
+      </Wrapper>
     </ThemeProvider>
   )
 }

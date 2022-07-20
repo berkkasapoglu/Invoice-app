@@ -5,11 +5,12 @@ import {
   editInvoice,
   removeInvoice,
   changeStatus,
+  toggleModal,
 } from "../../store/actions/invoicesActions"
 import {
   StyledInvoiceView,
   Description,
-  Link,
+  MotionLink,
   Title,
   Text,
   Info,
@@ -27,6 +28,7 @@ import Summary from "./Summary/Summary"
 import Button from "../common/Button/Button"
 import Badge from "../common/Badge/Badge"
 import { AiOutlineLeft } from "react-icons/ai"
+import { invoiceViewVariants } from "../../utilities/variants"
 
 function InvoiceView() {
   const { id } = useParams()
@@ -35,11 +37,6 @@ function InvoiceView() {
   const invoice = useSelector((state) =>
     state.invoices.invoiceItems.find((invoice) => invoice.id === id)
   )
-
-  const handleRemoveInvoice = () => {
-    dispatch(removeInvoice(id))
-    navigate("/")
-  }
 
   const handleEditInvoice = () => {
     dispatch(editInvoice(id))
@@ -52,28 +49,32 @@ function InvoiceView() {
   return (
     invoice && (
       <StyledInvoiceView>
-        <Link to="/">
+        <MotionLink
+          to="/"
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          variants={invoiceViewVariants.header}
+        >
           <AiOutlineLeft strokeWidth={40} />
           Go back
-        </Link>
-        <Header>
+        </MotionLink>
+        <Header
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          variants={invoiceViewVariants.header}
+        >
           <Text>Status</Text>
           <Badge status={invoice.status} />
           <ButtonWrapper>
-            {invoice.status === "paid" ? (
-              <Button type="btnDanger" onClick={() => handleRemoveInvoice(id)}>
-                Delete
-              </Button>
-            ) : (
+            <Button type="btnDanger" onClick={() => dispatch(toggleModal(id))}>
+              Delete
+            </Button>
+            {invoice.status !== "paid" && (
               <>
                 <Button type="btnInfo" onClick={() => handleEditInvoice(id)}>
                   Edit
-                </Button>
-                <Button
-                  type="btnDanger"
-                  onClick={() => handleRemoveInvoice(id)}
-                >
-                  Delete
                 </Button>
                 {invoice.status !== "draft" && (
                   <Button
@@ -87,7 +88,12 @@ function InvoiceView() {
             )}
           </ButtonWrapper>
         </Header>
-        <Body>
+        <Body
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          variants={invoiceViewVariants.body}
+        >
           <Description>
             <Info>
               <Code>{invoice.id}</Code>

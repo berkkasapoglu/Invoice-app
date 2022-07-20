@@ -1,10 +1,10 @@
 import styled, { css } from "styled-components"
 import DatePicker from "react-datepicker"
+import { motion } from "framer-motion"
 
-export const FormWrapper = styled.div`
+export const FormWrapper = styled(motion.div)`
   position: fixed;
   top: 0;
-  left: -700px;
   padding: 50px 30px 30px 140px;
   z-index: 25;
   width: 700px;
@@ -12,27 +12,6 @@ export const FormWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.bgBase};
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
-  transition: left 500ms ease-in-out;
-  ${({ isOpen }) =>
-    isOpen &&
-    css`
-      animation-duration: 700ms;
-      animation-name: slide;
-      left: 0px;
-      @keyframes slide {
-        from {
-          left: -700px;
-        }
-
-        70% {
-          left: 50px;
-        }
-
-        to {
-          left: 0;
-        }
-      }
-    `}
 `
 
 export const StyledForm = styled.form`
@@ -75,10 +54,11 @@ export const Label = styled.label`
   font-size: ${({ theme }) => theme.font.small};
   color: ${({ theme }) => theme.colors.textSecondary};
   padding: 0.5rem 0;
-  ${({ error }) =>
+  ${({ error, isValidated }) =>
     error &&
+    isValidated &&
     css`
-      color: ${({ theme }) => theme.colors.error};
+      color: 1px solid ${({ theme }) => theme.colors.error};
     `}
 `
 
@@ -91,7 +71,7 @@ export const BaseInput = css`
   border: 1px solid ${({ theme }) => theme.colors.bgInputBorder};
   font-weight: bold;
   font-size: ${({ theme }) => theme.font.small};
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.textPrimary};
   transition: border 0.3s ease-in-out;
   &:focus {
     border: 1px solid ${({ theme }) => theme.colors.purple};
@@ -100,8 +80,9 @@ export const BaseInput = css`
 
 export const Input = styled.input`
   ${BaseInput}
-  ${({ error }) =>
+  ${({ error, isValidated }) =>
     error &&
+    isValidated &&
     css`
       border: 1px solid ${({ theme }) => theme.colors.error};
     `}
@@ -118,22 +99,4 @@ export const Option = styled.option`
 export const StyledDatePicker = styled(DatePicker)`
   ${BaseInput}
   cursor: pointer;
-`
-export const Submit = styled.div`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: flex-end;
-  background-color: ${({ theme }) => theme.colors.bgBase};
-  padding: 2rem 4rem 2rem 8.75rem;
-  gap: 10px;
-  ${({ isEditOpen }) =>
-    !isEditOpen &&
-    css`
-      & > :first-child {
-        margin-right: auto;
-      }
-    `}
 `

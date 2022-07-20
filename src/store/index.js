@@ -1,10 +1,12 @@
 import { legacy_createStore as createStore, combineReducers } from "redux"
 import { invoicesReducer } from "./reducers/invoicesReducer"
+import { themeReducer } from "./reducers/themeReducer"
 import { loadState, saveState } from "./localStorage"
 
 const persistedState = loadState()
 const rootReducer = combineReducers({
   invoices: invoicesReducer,
+  theme: themeReducer,
 })
 
 const store = createStore(

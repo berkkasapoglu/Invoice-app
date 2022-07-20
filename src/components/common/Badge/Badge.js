@@ -1,8 +1,8 @@
 import { StyledStatus, Circle } from "./Badge.styles"
 
-function Badge({ status }) {
+function Badge({ status, className }) {
   return (
-    <StyledStatus currStatus={status}>
+    <StyledStatus currStatus={status} className={className}>
       <Circle currStatus={status} />
       {status}
     </StyledStatus>

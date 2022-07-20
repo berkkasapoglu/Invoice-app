@@ -7,12 +7,12 @@ export const StyledSummary = styled.div`
 
 export const Text = styled.p`
   font-size: ${({ theme }) => theme.font.small};
-  color: ${({ theme }) => theme.colors.textSecondary};
 `
 
 export const Table = styled.div`
   background-color: ${({ theme }) => theme.colors.bgSummary};
   border-radius: 0.5rem;
+  transition: background-color .4s ease-in-out;
 `
 
 export const TableOrder = styled.div`
@@ -29,7 +29,7 @@ export const Head = styled(TableOrder)`
 export const Body = styled.div`
   gap: 1rem 0;
   font-size: ${({ theme }) => theme.font.small};
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.textPrimary};
   font-weight: bold;
   padding-top: .5rem;
   padding-bottom: 1.5rem;
@@ -57,7 +57,9 @@ export const Result = styled.div`
   border-bottom-right-radius: inherit;
   border-bottom-left-radius: inherit;
   align-items: center;
+  color: ${({ theme }) => theme.colors.white};
   padding: 1rem 2rem;
+  transition: background-color .4s ease-in-out;
 `
 
 export const TotalPrice = styled.h1`

@@ -1,8 +1,9 @@
 import styled from "styled-components"
 import plusIcon from "../../assets/icon-plus.svg"
 import { StyledButton } from "../common/Button/Button.styles"
+import { motion } from "framer-motion"
 
-export const StyledHeader = styled.header`
+export const StyledHeader = styled(motion.header)`
   display: grid;
   grid-template-columns: 1fr auto auto;
   align-items: center;
