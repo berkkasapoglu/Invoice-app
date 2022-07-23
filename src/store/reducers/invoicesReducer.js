@@ -23,7 +23,8 @@ export const invoicesReducer = (
       const newInvoice = { id, ...payload.invoice }
       return {
         ...state,
-        invoiceItems: [...state.invoiceItems, newInvoice],
+        invoiceItems: [newInvoice, ...state.invoiceItems],
+        isFormOpen: false,
       }
     case ACTION_TYPES.REMOVE:
       const invoices = [...state.invoiceItems]
@@ -54,6 +55,8 @@ export const invoicesReducer = (
       return {
         ...state,
         invoiceItems: newInvoiceItems,
+        isFormOpen: false,
+        isEditModeOpen: false,
       }
     }
     case ACTION_TYPES.CHANGE_STATUS: {

@@ -8,8 +8,14 @@ export const StyledSubmit = styled.div`
   display: flex;
   justify-content: flex-end;
   background-color: ${({ theme }) => theme.colors.bgBase};
-  padding: 2rem 4rem 2rem 8.75rem;
+  padding: 16px 60px 30px 50px;
   gap: 10px;
+  @media (min-width: 1024px) {
+    padding: 16px 60px 30px 135px;
+  }
+  @media (max-width: 768px) {
+    padding: 40px 24px 30px 45px;
+  }
   ${({ isEditOpen }) =>
     !isEditOpen &&
     css`

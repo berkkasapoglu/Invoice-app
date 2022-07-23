@@ -58,7 +58,8 @@ export const Price = styled.h3`
   font-size: ${({ theme }) => theme.font.large};
   @media (max-width: 768px) {
     grid-row: 3;
-    grid-column: 1 / 3
+    grid-column: 1 / 4;
+    font-size: ${({ theme }) => theme.font.medium};
   }
 `
 

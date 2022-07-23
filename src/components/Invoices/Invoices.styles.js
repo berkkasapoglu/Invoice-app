@@ -12,7 +12,9 @@ export const StyledHeader = styled(motion.header)`
 
 export const Info = styled.div``
 
-export const Title = styled.h1``
+export const Title = styled.h1`
+  font-size: clamp(1.5rem, 2.5vw, 2rem)
+`
 
 export const InvoiceLengthInfo = styled.p`
   font-weight: bold;

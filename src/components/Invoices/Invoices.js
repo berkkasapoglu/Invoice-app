@@ -9,13 +9,15 @@ import InvoiceList from "./InvoiceList/InvoiceList"
 import Filter from "./Filter/Filter"
 import useInvoices from "../../hooks/useInvoices"
 import { useDispatch } from "react-redux/es/exports"
+import useWindowSize from "../../hooks/useWindowSize"
 import { openForm } from "../../store/actions/invoicesActions"
 import { invoicesVariants } from "../../utilities/variants"
 
 function Invoices() {
   const { invoices } = useInvoices()
   const dispatch = useDispatch()
-
+  const { windowSize } = useWindowSize()
+  const isMobile = windowSize.width <= 768
   const handleFormOpen = () => {
     dispatch(openForm())
   }
@@ -31,12 +33,13 @@ function Invoices() {
         <Info>
           <Title>Invoices</Title>
           <InvoiceLengthInfo>
-            There are {invoices.length} total invoices
+            {!isMobile && "There are "}
+            {invoices.length} total invoices
           </InvoiceLengthInfo>
         </Info>
-        <Filter />
+        <Filter isMobile={isMobile} />
         <InvoiceButton type="btnPrimary" onClick={handleFormOpen}>
-          New Invoice
+          {isMobile ? "New" : "New Invoice"}
         </InvoiceButton>
       </StyledHeader>
       <InvoiceList />

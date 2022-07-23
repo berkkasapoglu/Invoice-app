@@ -3,6 +3,7 @@ import styled from "styled-components"
 export const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  position: relative;
   margin: 0;
   min-height: 100vh;
   background-color: ${({ theme }) => theme.colors.bgBase};

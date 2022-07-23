@@ -13,4 +13,8 @@ export const StyledButton = styled.button`
   &:hover {
     background-color: ${({ theme, type }) => theme.colors[type+"Hover"]};
   }
+  @media (max-width: 768px) {
+    font-size: ${({ theme }) => theme.font.extraSmall};
+    padding: .8rem 1rem;
+  }
 `

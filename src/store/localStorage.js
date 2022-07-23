@@ -2,15 +2,20 @@ import initialState from "../data/invoice"
 
 export const loadState = () => {
   try {
-    const serializedState = localStorage.getItem("data")
-    if (serializedState === null) {
+    const invoicesState = localStorage.getItem("invoices")
+    const themeState = localStorage.getItem("theme")
+    if (invoicesState === null) {
       return {
         invoices: {
-          invoiceItems: initialState
-        }
+          invoiceItems: initialState,
+        },
+        theme: "dark",
       }
     }
-    return JSON.parse(serializedState)
+    return {
+      invoices: JSON.parse(invoicesState),
+      theme: JSON.parse(themeState)
+    }
   } catch (err) {
     return undefined
   }
@@ -18,7 +23,8 @@ export const loadState = () => {
 
 export const saveState = (state) => {
   try {
-    const serializedState = JSON.stringify(state)
-    localStorage.setItem("data", serializedState)
+    for (const key in state) {
+      localStorage.setItem([key], JSON.stringify(state[key]))
+    }
   } catch {}
 }

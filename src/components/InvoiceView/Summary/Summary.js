@@ -10,25 +10,42 @@ import {
   ItemName,
   ItemQuantity,
   ItemPrice,
-  ItemTotal
+  ItemTotal,
+  ItemQuantityPrice
 } from "./Summary.styles"
+import useWindowSize from "../../../hooks/useWindowSize"
 
 function Summary({ invoice }) {
+  const { windowSize } = useWindowSize()
+  const isDesktop = windowSize.width > 768
   return (
     <StyledSummary>
       <Table>
-        <Head>
-          <ItemName>Item Name</ItemName>
-          <ItemQuantity>QTY.</ItemQuantity>
-          <ItemPrice>Price</ItemPrice>
-          <ItemTotal>Total</ItemTotal>
-        </Head>
+        {isDesktop && (
+          <Head>
+            <ItemName>Item Name</ItemName>
+            <ItemQuantity>QTY.</ItemQuantity>
+            <ItemPrice>Price</ItemPrice>
+            <ItemTotal>Total</ItemTotal>
+          </Head>
+        )}
+
         <Body>
           {invoice.items.map((item, idx) => (
             <Item key={idx}>
               <ItemName>{item.name}</ItemName>
-              <ItemQuantity>{item.quantity}</ItemQuantity>
-              <ItemPrice>£{item.price}</ItemPrice>
+
+              {isDesktop ? (
+                <>
+                  <ItemQuantity>{item.quantity}</ItemQuantity>
+                  <ItemPrice>£ {item.price}</ItemPrice>
+                </>
+              ) : (
+                <>
+                  <ItemQuantityPrice>{item.quantity} x £ {item.price}</ItemQuantityPrice>
+                </>
+              )}
+
               <ItemTotal>£{item.total}</ItemTotal>
             </Item>
           ))}

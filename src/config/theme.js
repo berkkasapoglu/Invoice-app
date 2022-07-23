@@ -32,8 +32,8 @@ const theme = {
     paidDark: "hsla(160, 67%, 52%, 7%)",
     pending: "hsl(34, 100%, 50%)",
     pendingDark: "hsla(34, 100%, 50%, 7%)",
-    draft: "hsl(231, 75%, 93%)",
-    draftDark: "hsla(231, 75%, 93%, 7%)",
+    draft: "hsl(231, 20%, 27%)",
+    draftDark: "hsla(231, 20%, 27%, 5.71%)",
   },
   dark: {
     bgBase: "hsl(231, 30%, 11%)",
@@ -72,6 +72,7 @@ const theme = {
     draftDark: "hsla(231, 75%, 93%, 7%)",
   },
   fontSizes: {
+    extraSmall: "0.8rem",
     small: "0.875rem",
     medium: "1rem",
     large: "1.2rem",

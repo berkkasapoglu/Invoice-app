@@ -20,6 +20,7 @@ store.subscribe(() => {
     invoices: {
       invoiceItems: store.getState().invoices.invoiceItems,
     },
+    theme: store.getState().theme
   })
 })
 

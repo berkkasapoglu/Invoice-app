@@ -20,11 +20,12 @@ export const StyledSidebar = styled.nav`
     width: 100%;
     height: 80px;
     flex-direction: row;
+    border-radius: unset;
   }
 `
 
 export const Footer = styled.div`
-  padding: 0 4rem;
+  padding: 0 2rem;
   @media (min-width: 1024px) {
     width: 100%;
     padding: 4rem 0;

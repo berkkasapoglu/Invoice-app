@@ -5,13 +5,24 @@ import { motion } from "framer-motion"
 export const FormWrapper = styled(motion.div)`
   position: fixed;
   top: 0;
+  left: 0;
   padding: 50px 30px 30px 140px;
+  bottom: 0;
   z-index: 25;
-  width: 700px;
-  height: 100vh;
   background-color: ${({ theme }) => theme.colors.bgBase};
   border-top-right-radius: 20px;
+  max-width: 700px;
   border-bottom-right-radius: 20px;
+  overflow: hidden;
+  @media (max-width: 1024px) {
+    left: -20px;
+    top: 80px;
+    padding: 40px 30px 30px 50px;
+  }
+  @media (max-width: 768px) {
+    padding: 40px 10px 30px 45px;
+    border-radius: 0;
+  }
 `
 
 export const StyledForm = styled.form`

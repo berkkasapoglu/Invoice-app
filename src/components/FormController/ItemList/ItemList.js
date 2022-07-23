@@ -5,12 +5,12 @@ import {
   List,
   Row,
   Title,
-  Head,
   Number,
   DeleteIcon,
+  Wrapper,
 } from "./ItemList.styles"
 import Button from "../../common/Button/Button"
-
+import useWindowSize from "../../../hooks/useWindowSize"
 const initialItemState = {
   name: "",
   quantity: 0,
@@ -20,6 +20,8 @@ const initialItemState = {
 
 function ItemList({ formData, setFormData, errors, setErrors, isValidated }) {
   const { items } = formData
+  const { windowSize } = useWindowSize()
+  const isDesktop = windowSize.width > 768
 
   const handleClickNewItem = (e) => {
     e.preventDefault()
@@ -84,58 +86,66 @@ function ItemList({ formData, setFormData, errors, setErrors, isValidated }) {
       <Title>Item List</Title>
       {items.length ? (
         <>
-          <Head>
-            <Label
-              error={errors && getLabelErrors("name")}
-              isValidated={isValidated}
-            >
-              Item Name
-            </Label>
-            <Label
-              error={errors && getLabelErrors("quantity")}
-              isValidated={isValidated}
-            >
-              Qty.
-            </Label>
-            <Label
-              error={errors && getLabelErrors("price")}
-              isValidated={isValidated}
-            >
-              Price
-            </Label>
-            <Label>Total</Label>
-          </Head>
           <List>
             {items.map((item, idx) => (
               <Row key={idx}>
-                <Input
-                  onChange={(e) => onChange(e, idx)}
-                  value={item.name}
-                  name="name"
-                  error={errors && errors.items && errors.items[idx]?.name}
-                  isValidated={isValidated}
-                />
-                <Input
-                  onChange={(e) => onChange(e, idx)}
-                  type="Number"
-                  min={0}
-                  value={item.quantity}
-                  name="quantity"
-                  error={errors && errors.items && errors.items[idx]?.quantity}
-                  isValidated={isValidated}
-                />
-                <Input
-                  onChange={(e) => onChange(e, idx)}
-                  type="Number"
-                  min={0}
-                  value={item.price}
-                  name="price"
-                  error={errors && errors.items && errors.items[idx]?.price}
-                  isValidated={isValidated}
-                />
-                <Number onChange={(e) => onChange(e, idx)} name="total">
-                  {item.quantity * item.price}
-                </Number>
+                <Wrapper hideLabels={idx > 0 && isDesktop}>
+                  <Label
+                    error={errors && getLabelErrors("name")}
+                    isValidated={isValidated}
+                  >
+                    Item Name
+                  </Label>
+                  <Input
+                    onChange={(e) => onChange(e, idx)}
+                    value={item.name}
+                    name="name"
+                    error={errors && errors.items && errors.items[idx]?.name}
+                    isValidated={isValidated}
+                  />
+                </Wrapper>
+                <Wrapper hideLabels={idx > 0 && isDesktop}>
+                  <Label
+                    error={errors && getLabelErrors("quantity")}
+                    isValidated={isValidated}
+                  >
+                    Qty.
+                  </Label>
+                  <Input
+                    onChange={(e) => onChange(e, idx)}
+                    type="Number"
+                    min={0}
+                    value={item.quantity}
+                    name="quantity"
+                    error={
+                      errors && errors.items && errors.items[idx]?.quantity
+                    }
+                    isValidated={isValidated}
+                  />
+                </Wrapper>
+                <Wrapper hideLabels={idx > 0 && isDesktop}>
+                  <Label
+                    error={errors && getLabelErrors("price")}
+                    isValidated={isValidated}
+                  >
+                    Price
+                  </Label>
+                  <Input
+                    onChange={(e) => onChange(e, idx)}
+                    type="Number"
+                    min={0}
+                    value={item.price}
+                    name="price"
+                    error={errors && errors.items && errors.items[idx]?.price}
+                    isValidated={isValidated}
+                  />
+                </Wrapper>
+                <Wrapper hideLabels={idx > 0 && isDesktop}>
+                  <Label>Total</Label>
+                  <Number onChange={(e) => onChange(e, idx)} name="total">
+                    {item.quantity * item.price}
+                  </Number>
+                </Wrapper>
                 <DeleteIcon onClick={() => handleItemRemove(idx)} />
               </Row>
             ))}

@@ -14,7 +14,7 @@ export const Body = styled.div`
   background-color: ${({ theme }) => theme.colors.bgSecondary};
   border-radius: 0.5rem;
   padding: 2rem;
-  max-width: 500px;
+  width: min(80%, 500px);
 `
 export const Title = styled.h2``
 export const Message = styled.p`

@@ -7,17 +7,12 @@ import {
   ArrowDown,
 } from "./Filter.styles"
 import useClickOutside from "../../../hooks/useClickOutside"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { filterByStatus } from "../../../store/actions/invoicesActions"
 
-function Filter() {
+function Filter({ isMobile }) {
   const [isFilterOpen, setIsFilterOpen] = useState(false)
-  const [selectedFilters, setSelectedFilters] = useState({
-    paid: false,
-    pending: false,
-    draft: false,
-  })
-
+  const { filters = {} } = useSelector((state) => state.invoices)
   const filterRef = useClickOutside(() => setIsFilterOpen(false))
   const dispatch = useDispatch()
 
@@ -27,37 +22,37 @@ function Filter() {
 
   const handleOptionSelect = (e) => {
     const currentFilters = {
-      ...selectedFilters,
-      [e.target.value]: !selectedFilters[e.target.value],
+      ...filters,
+      [e.target.value]: !filters[e.target.value],
     }
     dispatch(filterByStatus(currentFilters))
-    setSelectedFilters(currentFilters)
   }
 
   return (
     <StyledFilter ref={filterRef}>
       <Button onClick={toggleFilterList}>
-        Filter By Status
+        Filter
+        {!isMobile && " By Status"}
         <ArrowDown />
       </Button>
       {isFilterOpen && (
         <OptionList>
           <Option
-            selected={selectedFilters.paid}
+            selected={filters.paid}
             onClick={handleOptionSelect}
             value="paid"
           >
             Paid
           </Option>
           <Option
-            selected={selectedFilters.pending}
+            selected={filters.pending}
             onClick={handleOptionSelect}
             value="pending"
           >
             Pending
           </Option>
           <Option
-            selected={selectedFilters.draft}
+            selected={filters.draft}
             onClick={handleOptionSelect}
             value="draft"
           >

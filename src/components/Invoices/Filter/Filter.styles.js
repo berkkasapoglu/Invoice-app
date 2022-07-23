@@ -30,6 +30,7 @@ export const ArrowDown = styled(AiOutlineDown)`
 export const OptionList = styled.div`
   position: absolute;
   width: 100%;
+  min-width: 150px;
   padding: 1rem;
   background-color: ${({ theme }) => theme.colors.bgSecondary};
   box-shadow: 0 10px 20px 0 rgb(0 0 0 / 25%);

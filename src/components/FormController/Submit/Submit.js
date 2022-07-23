@@ -5,14 +5,14 @@ function Submit({
   handleEditSubmit,
   discard,
   handleAddInvoice,
-  isEditModeOpen,
+  isEditForm,
 }) {
   return (
     <StyledSubmit>
       <Button type="btnGray" onClick={discard}>
         Discard
       </Button>
-      {isEditModeOpen ? (
+      {isEditForm ? (
         <>
           <Button type="btnPrimary" onClick={handleEditSubmit}>
             Save Changes

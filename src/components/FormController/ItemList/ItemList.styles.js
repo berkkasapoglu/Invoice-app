@@ -12,9 +12,14 @@ export const Title = styled.h3`
 
 const RowOrder = css`
   display: grid;
-  grid-template-columns: 180px 100px 100px 60px 1fr;
-  align-items: center;
   gap: 10px;
+  grid-template-columns: 150px 120px 120px 50px min-content;
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr) 100px min-content;
+    & > :nth-child(1) {
+      grid-column: 1 / -1;
+    }
+  }
 `
 
 export const Head = styled.div`
@@ -22,6 +27,19 @@ export const Head = styled.div`
   & ${Label}:nth-child(4) {
     justify-self: center;
   }
+`
+
+export const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  ${({ hideLabels }) =>
+    hideLabels &&
+    css`
+      & > :nth-child(1) {
+        display: none;
+      }
+    `}
 `
 
 export const List = styled.ul`
@@ -35,14 +53,16 @@ export const Row = styled.li`
 
 export const Number = styled.h3`
   font-size: ${({ theme }) => theme.font.medium};
-  justify-self: center;
+  padding: 0.8rem 0;
 `
 
 export const DeleteIcon = styled(FaTrash)`
   cursor: pointer;
-  fill: ${({theme}) => theme.colors.grayLight};
-  transition: fill .2s ease-in-out;
+  fill: ${({ theme }) => theme.colors.grayLight};
+  transition: fill 0.2s ease-in-out;
+  height: 3.2rem;
+  align-self: flex-end;
   &:hover {
-    fill: ${({theme}) => theme.colors.purple};
+    fill: ${({ theme }) => theme.colors.purple};
   }
 `

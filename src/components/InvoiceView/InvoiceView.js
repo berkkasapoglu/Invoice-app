@@ -1,9 +1,7 @@
 import { useDispatch, useSelector } from "react-redux/es/exports"
 import { useParams } from "react-router-dom"
-import { useNavigate } from "react-router-dom"
 import {
   editInvoice,
-  removeInvoice,
   changeStatus,
   toggleModal,
 } from "../../store/actions/invoicesActions"
@@ -29,15 +27,16 @@ import Button from "../common/Button/Button"
 import Badge from "../common/Badge/Badge"
 import { AiOutlineLeft } from "react-icons/ai"
 import { invoiceViewVariants } from "../../utilities/variants"
+import useWindowSize from "../../hooks/useWindowSize"
 
 function InvoiceView() {
   const { id } = useParams()
   const dispatch = useDispatch()
-  const navigate = useNavigate()
   const invoice = useSelector((state) =>
     state.invoices.invoiceItems.find((invoice) => invoice.id === id)
   )
-
+  const { windowSize } = useWindowSize()
+  const isMobile = windowSize.width <= 768
   const handleEditInvoice = () => {
     dispatch(editInvoice(id))
   }
@@ -45,7 +44,6 @@ function InvoiceView() {
   const handleChangeStatus = (status) => {
     dispatch(changeStatus(id, status))
   }
-
   return (
     invoice && (
       <StyledInvoiceView>
@@ -67,26 +65,31 @@ function InvoiceView() {
         >
           <Text>Status</Text>
           <Badge status={invoice.status} />
-          <ButtonWrapper>
-            <Button type="btnDanger" onClick={() => dispatch(toggleModal(id))}>
-              Delete
-            </Button>
-            {invoice.status !== "paid" && (
-              <>
-                <Button type="btnInfo" onClick={() => handleEditInvoice(id)}>
-                  Edit
-                </Button>
-                {invoice.status !== "draft" && (
-                  <Button
-                    type="btnPrimary"
-                    onClick={() => handleChangeStatus("paid")}
-                  >
-                    Mark as Paid
+          {!isMobile && (
+            <ButtonWrapper>
+              <Button
+                type="btnDanger"
+                onClick={() => dispatch(toggleModal(id))}
+              >
+                Delete
+              </Button>
+              {invoice.status !== "paid" && (
+                <>
+                  <Button type="btnInfo" onClick={() => handleEditInvoice(id)}>
+                    Edit
                   </Button>
-                )}
-              </>
-            )}
-          </ButtonWrapper>
+                  {invoice.status !== "draft" && (
+                    <Button
+                      type="btnPrimary"
+                      onClick={() => handleChangeStatus("paid")}
+                    >
+                      Mark as Paid
+                    </Button>
+                  )}
+                </>
+              )}
+            </ButtonWrapper>
+          )}
         </Header>
         <Body
           initial="hidden"
@@ -128,6 +131,30 @@ function InvoiceView() {
           </Description>
           <Summary invoice={invoice} />
         </Body>
+        {isMobile && (
+            <ButtonWrapper>
+              <Button
+                type="btnDanger"
+                onClick={() => dispatch(toggleModal(id))}
+              >
+                Delete
+              </Button>
+              {invoice.status !== "paid" && (
+                <>
+                  <Button type="btnInfo" onClick={() => handleEditInvoice(id)}>
+                    Edit
+                  </Button>
+                  {invoice.status !== "draft" && (
+                    <Button
+                      type="btnPrimary"
+                      onClick={() => handleChangeStatus("paid")}
+                    >
+                      Mark as Paid
+                    </Button>
+                  )}
+                </>
+              )}
+            </ButtonWrapper>)}
       </StyledInvoiceView>
     )
   )

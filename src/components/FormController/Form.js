@@ -17,11 +17,10 @@ import ItemList from "./ItemList/ItemList"
 import ModalOverlay from "../common/ModalOverlay/ModalOverlay"
 import { StyledDatePicker } from "./Form.styles"
 import "react-datepicker/dist/react-datepicker.css"
-import useClickOutside from "../../hooks/useClickOutside"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 import { closeForm } from "../../store/actions/invoicesActions"
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { addInvoice, saveChanges } from "../../store/actions/invoicesActions"
 import validateForm from "../../utilities/validateForm"
 import { formVariants } from "../../utilities/variants"
@@ -54,23 +53,24 @@ function Form() {
   const { isEditModeOpen, invoiceItems, invoiceId } = useSelector(
     (state) => state.invoices
   )
+
+  const isEditForm = useRef(isEditModeOpen)
   const [formData, setFormData] = useState(initialFormState)
   const [errors, setErrors] = useState({})
   const [messages, setMessages] = useState([])
   const [isValidated, setIsValidated] = useState(false)
 
   useEffect(() => {
-    isEditModeOpen
+    isEditForm.current
       ? setFormData(invoiceItems.find((item) => item.id === invoiceId))
       : setFormData(initialFormState)
   }, [isEditModeOpen, invoiceId, invoiceItems])
 
   const dispatch = useDispatch()
-  const dispatchCallback = () => {
+
+  const discard = () => {
     dispatch(closeForm())
   }
-
-  const formRef = useClickOutside(dispatchCallback)
 
   const handleFormChange = (e) => {
     const newFormData = {
@@ -141,21 +141,18 @@ function Form() {
     }
   }
 
-  const discard = () => {
-    dispatch(closeForm())
-  }
-
   return (
     <>
       <ModalOverlay />
       <FormWrapper
-        ref={formRef}
         variants={formVariants.form}
         initial="hidden"
         animate="visible"
         exit="exit"
       >
-        <Header>New Invoice</Header>
+        <Header>
+          {isEditForm.current ? `Edit #${invoiceId}` : "New Invoice"}
+        </Header>
         <StyledForm>
           <InputSection>
             <SubHeader>Bill from</SubHeader>
@@ -346,6 +343,7 @@ function Form() {
                   dateFormat="dd MMM yyyy"
                   selected={new Date(formData.createdAt)}
                   name="createdAt"
+                  minDate={new Date()}
                   onChange={(date) =>
                     setFormData({ ...formData, createdAt: date })
                   }
@@ -390,7 +388,7 @@ function Form() {
           <Error messages={messages} />
         </StyledForm>
         <Submit
-          isEditOpen={isEditModeOpen}
+          isEditForm={isEditForm.current}
           discard={discard}
           handleAddInvoice={handleAddInvoice}
           handleEditSubmit={handleEditSubmit}
